@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FPV Speaker</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Safety Modal -->
+  <div id="safety-modal" class="modal-overlay">
+    <div class="modal">
+      <h2>WARNING — REMOVE ALL PROPELLERS</h2>
+      <p>This tool directly controls motor speed. Motors <strong>will spin</strong>. Operating with propellers attached is extremely dangerous.</p>
+      <p>Confirm that <strong>all propellers have been removed</strong> before proceeding.</p>
+      <button class="btn btn-primary" id="btn-safety-confirm">I confirm — props are removed</button>
+    </div>
+  </div>
+
+  <!-- Compatibility Warning -->
+  <div id="compat-warning" class="compat-warning"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <h1>FPV Speaker</h1>
+    <span style="color: var(--text-dim); font-size: 0.85rem;">Live Audio → Motor Sound</span>
+  </header>
+
+  <div class="panels">
+
+    <!-- Connection Panel -->
+    <div class="panel">
+      <h2>Flight Controller</h2>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btn-connect">Connect</button>
+        <button class="btn btn-outline" id="btn-disconnect" disabled>Disconnect</button>
+        <span><span class="status-dot" id="serial-dot"></span><span id="serial-status">Disconnected</span></span>
+      </div>
+      <div class="fc-info" id="fc-info"></div>
+    </div>
+
+    <!-- Audio Panel -->
+    <div class="panel">
+      <h2>Audio Capture</h2>
+      <div class="btn-row">
+        <button class="btn btn-green" id="btn-capture" disabled>Capture System Audio</button>
+        <button class="btn btn-outline" id="btn-stop-audio" disabled>Stop</button>
+        <span><span class="status-dot" id="audio-dot"></span><span id="audio-status">Inactive</span></span>
+      </div>
+    </div>
+
+    <!-- Visualization Panel -->
+    <div class="panel panel-full">
+      <h2>Spectrum & Frequency</h2>
+      <canvas id="spectrum"></canvas>
+      <div class="freq-display">
+        <span class="freq-value" id="freq-value">0</span><span class="freq-unit">Hz</span>
+        <div class="throttle-value">Throttle: <span id="throttle-value">0</span></div>
+      </div>
+    </div>
+
+    <!-- Controls Panel -->
+    <div class="panel panel-full">
+      <h2>Controls</h2>
+      <div class="control-grid">
+        <div class="control-item">
+          <label>Max Throttle <span class="control-value" id="val-max-throttle">150</span></label>
+          <input type="range" id="slider-max-throttle" min="0" max="400" value="150">
+        </div>
+        <div class="control-item">
+          <label>Min Frequency <span class="control-value" id="val-min-freq">50</span> Hz</label>
+          <input type="range" id="slider-min-freq" min="20" max="500" value="50">
+        </div>
+        <div class="control-item">
+          <label>Max Frequency <span class="control-value" id="val-max-freq">500</span> Hz</label>
+          <input type="range" id="slider-max-freq" min="100" max="2000" value="500">
+        </div>
+        <div class="control-item">
+          <label>Sensitivity (Noise Floor) <span class="control-value" id="val-sensitivity">-70</span> dB</label>
+          <input type="range" id="slider-sensitivity" min="-100" max="-20" value="-70">
+        </div>
+        <div class="control-item">
+          <label>Protocol</label>
+          <select id="select-protocol">
+            <option value="dshot" selected>DShot</option>
+            <option value="analog">Analog PWM</option>
+          </select>
+        </div>
+        <div class="control-item">
+          <label>Motor Count</label>
+          <select id="select-motors">
+            <option value="3">3</option>
+            <option value="4" selected>4</option>
+            <option value="6">6</option>
+            <option value="8">8</option>
+          </select>
+        </div>
+        <div class="control-item">
+          <label>Slew Rate <span class="control-value" id="val-slew">15</span></label>
+          <input type="range" id="slider-slew" min="1" max="50" value="15">
+        </div>
+      </div>
+
+      <div class="toggle-row">
+        <span class="toggle-label">Motor Output</span>
+        <label class="toggle">
+          <input type="checkbox" id="toggle-enable" disabled>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Emergency Stop -->
+  <button class="estop" id="btn-estop">EMERGENCY STOP</button>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
